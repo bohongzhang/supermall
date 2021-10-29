@@ -3,7 +3,8 @@
     <nav-bar class="home-nav">
       <div slot="center">购物街</div>
     </nav-bar>
-    <HomeSwiper :banners="banners"/>
+    <home-swiper :banners="banners"/>
+    <recommend-view :recommends="recommends"/>
 
 
   </div>
@@ -13,16 +14,20 @@
 <script>
 import NavBar from "components/common/navbar/NavBar";
 import HomeSwiper from "./childComps/HomeSwiper";
+import RecommendView from "./childComps/RecommendView";
+
 
 // 导入在network/home.js里面自定义的方法
 import {getHomeMultidata} from "network/home"
+
 
 
 export default {
   name: "Home",
   components: {
     NavBar,
-    HomeSwiper
+    HomeSwiper,
+    RecommendView
   },
   data() {
     return {
@@ -31,7 +36,6 @@ export default {
     }
   },
   created() {
-    console.log(this)
     //1.请求多个数据
     getHomeMultidata().then(res => {
       this.banners = res.data.banner.list;
