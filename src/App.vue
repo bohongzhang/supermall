@@ -1,14 +1,19 @@
 <template>
   <div id="app">
-    <h2> 我是app的标题 </h2>
+    <router-view></router-view>
+    <main-tab-bar/>
   </div>
 </template>
 
 <script>
+import MainTabBar from "components/content/mainTabbar/MainTabbar";
+
 
 export default {
   name: 'App',
-  components: {}
+  components: {
+    MainTabBar
+  }
 }
 </script>
 
