@@ -1,24 +1,8 @@
 <template>
-  <div class="wrapper">
+  <div class="wrapper" ref="aa">
     <ul>
       <button @click="btnClick"> 我是按钮</button>
-      <li>分类列表1</li>
-      <li>分类列表2</li>
-      <li>分类列表3</li>
-      <li>分类列表4</li>
-      <li>分类列表5</li>
-      <li>分类列表6</li>
-      <li>分类列表7</li>
-      <li>分类列表8</li>
-      <li>分类列表9</li>
-      <li>分类列表10</li>
-      <li>分类列表11</li>
-      <li>分类列表12</li>
-      <li>分类列表13</li>
-      <li>分类列表14</li>
-      <li>分类列表15</li>
-      <li>分类列表16</li>
-      <li>分类列表17</li>
+
       <li>分类列表18</li>
       <li>分类列表19</li>
       <li>分类列表20</li>
@@ -62,46 +46,6 @@
       <li>分类列表58</li>
       <li>分类列表59</li>
       <li>分类列表60</li>
-      <li>分类列表61</li>
-      <li>分类列表62</li>
-      <li>分类列表63</li>
-      <li>分类列表64</li>
-      <li>分类列表65</li>
-      <li>分类列表66</li>
-      <li>分类列表67</li>
-      <li>分类列表68</li>
-      <li>分类列表69</li>
-      <li>分类列表70</li>
-      <li>分类列表71</li>
-      <li>分类列表72</li>
-      <li>分类列表73</li>
-      <li>分类列表74</li>
-      <li>分类列表75</li>
-      <li>分类列表76</li>
-      <li>分类列表77</li>
-      <li>分类列表78</li>
-      <li>分类列表79</li>
-      <li>分类列表80</li>
-      <li>分类列表81</li>
-      <li>分类列表82</li>
-      <li>分类列表83</li>
-      <li>分类列表84</li>
-      <li>分类列表85</li>
-      <li>分类列表86</li>
-      <li>分类列表87</li>
-      <li>分类列表88</li>
-      <li>分类列表89</li>
-      <li>分类列表90</li>
-      <li>分类列表91</li>
-      <li>分类列表92</li>
-      <li>分类列表93</li>
-      <li>分类列表94</li>
-      <li>分类列表95</li>
-      <li>分类列表96</li>
-      <li>分类列表97</li>
-      <li>分类列表98</li>
-      <li>分类列表99</li>
-      <li>分类列表100</li>
     </ul>
   </div>
 </template>
@@ -124,8 +68,9 @@ export default {
   },
   mounted() {
 
-    let wrapper = document.querySelector('.wrapper')
+    let wrapper = this.$refs.aa
     this.scroll = new BScroll(wrapper, {
+      //控制div是否可以点击
       click: true,
       probeType: 3,
       pullUpLoad: true

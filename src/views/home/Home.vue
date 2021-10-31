@@ -4,14 +4,19 @@
       <div slot="center">购物街</div>
     </nav-bar>
 
-    <scroll class="content">
+    <scroll class="content" ref="scroll"
+            :probe-type="3"
+            :pullUpLoad="true"
+            @scroll="contentScroll"
+            @pullingUp="loadMore"
+    >
       <home-swiper :banners="banners"/>
       <recommend-view :recommends="recommends"/>
       <feature-view/>
       <tab-control class="tab-control" :title="title" @tabClick="tabClick"/>
       <goods-list :goods="showGoods"/>
     </scroll>
-    <back-top @click.native="backClick"/>
+    <back-top @click.native="backClick" v-show="isShowBackTop"/>
 
 
   </div>
@@ -58,7 +63,8 @@ export default {
         'new': {page: 0, list: []},
         'sell': {page: 0, list: []}
       },
-      currentType: 'pop'
+      currentType: 'pop',
+      isShowBackTop: false
     }
   },
   computed: {
@@ -73,7 +79,10 @@ export default {
     this.getHomeGoods('pop')
     this.getHomeGoods('new')
     this.getHomeGoods('sell')
-
+    // 3,添加监听item中方法
+    this.$bus.$on('itemimageload',()=>{
+      this.$refs.scroll.refresh();
+    })
   },
   methods: {
     /**
@@ -92,10 +101,16 @@ export default {
           break
       }
     },
-    backClick(){
-      console.log("11111");
+    backClick() {
+      // 参数 0左侧 0 上层   500毫秒
+      this.$refs.scroll.scrollTo()
     },
-
+    contentScroll(position) {
+      this.isShowBackTop = -position.y > 1000
+    },
+    loadMore(){
+      this.getHomeGoods(this.currentType)
+    },
 
     /**
      * 网络请求相关方法
@@ -110,6 +125,9 @@ export default {
       const page = this.goods[type].page + 1
       getHomeGoods(type, page).then(res => {
         this.goods[type].list.push(...res.data.list)
+
+        this.goods[type].page +=1
+        this.$refs.scroll.finishPullUp()
       })
     }
 
@@ -145,7 +163,7 @@ export default {
 /*.content {*/
 /*  height: calc(100% - 93px);*/
 /*  overflow: hidden;*/
-/*  margin-top: 48px;*/
+/*  margin-top: 44px;*/
 /*}*/
 
 .content {
