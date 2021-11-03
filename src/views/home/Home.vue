@@ -49,6 +49,7 @@ import {
   getHomeGoods
 } from "network/home";
 import {debounce} from "common/utils.js"
+import {itemListenerMixin} from "../../common/mixin";
 import Scroll from "components/common/scroll/Scroll";
 
 
@@ -65,6 +66,7 @@ export default {
     Scroll,
     BackTop
   },
+  mixins: [itemListenerMixin],
   data() {
     return {
       banners: [],
@@ -80,6 +82,7 @@ export default {
       taboffsetTop: 0,
       isTabFixed: false,
       saveY: 0
+
     }
   },
   computed: {
@@ -103,6 +106,8 @@ export default {
   deactivated() {
     // 这里可以使用一个计算属性
     this.saveY = this.$refs.scroll.getScrollY
+
+    this.$bus.$off('itemimageload', this.itemImgListener)
   },
   created() {
     //1.请求多个数据
@@ -114,13 +119,12 @@ export default {
 
   },
   mounted() {
-    // 3,添加监听item中方法
-    const refresh = debounce(this.$refs.scroll.refresh, 500)
-    this.$bus.$on('itemimageload', (info) => {
-      // 调用的太频繁了
-      // this.$refs.scroll.refresh();
-      refresh();
-    })
+    // // 3,添加监听item中方法
+    // const refresh = debounce(this.$refs.scroll.refresh, 500)
+    // this.itemImgListener = (info) => {
+    //   refresh();
+    // }
+    // this.$bus.$on('itemimageload', this.itemImgListener)
 
   },
   methods: {
